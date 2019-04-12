@@ -17,6 +17,7 @@
 #import "YMBrightnessOperation.h"
 #import "YMZoomBlurOperation.h"
 #import "YMToonOperation.h"
+#import "YMStylizeOperation.h"
 
 @interface CAMetalLayerPage ()
 
@@ -34,7 +35,7 @@
 
 @property (nonatomic, assign) float intensity;
 @property (nonatomic, assign) float offset;
-@property (nonatomic, strong) YMToonOperation *operation;
+@property (nonatomic, strong) YMStylizeOperation *operation;
 
 @end
 
@@ -49,7 +50,7 @@
         make.bottom.equalTo(self.mas_bottomLayoutGuideTop);
     }];
     self.textureInput = [[YMTextureInput alloc] initWithUIImage:[UIImage imageNamed:@"DogLogo"]];
-    self.operation = [[YMToonOperation alloc] init];
+    self.operation = [[YMStylizeOperation alloc] init];
     self.textureInput.imageOutput = self.operation;
     self.operation.imageOutput = self.outputView;
     [self.textureInput processTexture];
@@ -82,13 +83,6 @@
 
 - (void)sliderValueChanged:(id)sender
 {
-    UISlider *slider = (UISlider *)sender;
-    if (slider.tag == 0) {
-        self.operation.magTol = slider.value;
-    } else {
-        self.operation.quantize = slider.value;
-    }
-    [self.textureInput processTexture];
 }
 
 - (YMTextureOutput *)outputView
